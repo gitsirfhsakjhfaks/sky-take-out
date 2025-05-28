@@ -10,6 +10,8 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Update;
 
+import java.util.List;
+
 /**
  * @Author: 孙毅
  * @Date: 2025/5/22 20:10
@@ -42,4 +44,10 @@ public interface CategoryMapper {
 
     @Delete("delete from category where id=#{id}")
     void deleteCategoryById(Long id);
+
+    /**
+     * 查询分类情况
+     * @return
+     */
+    List<Category> listCategoryType(String type);
 }

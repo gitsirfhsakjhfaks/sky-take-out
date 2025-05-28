@@ -5,6 +5,8 @@ import com.sky.dto.CategoryPageQueryDTO;
 import com.sky.entity.Category;
 import com.sky.result.PageResult;
 
+import java.util.List;
+
 /**
  * @Author: 孙毅
  * @Date: 2025/5/22 14:31
@@ -46,4 +48,10 @@ public interface CategoryService {
      * @return
      */
     void deleteCategoryById(Long id);
+
+    /**
+     * 查询分类情况
+     * @return
+     */
+    List<Category> listCategoryType(String type);
 }

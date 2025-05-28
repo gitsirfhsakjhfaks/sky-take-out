@@ -12,6 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * @Author: 孙毅
  * @Date: 2025/5/22 14:23
@@ -89,5 +91,17 @@ public class CategoryController {
         log.info("删除分类,id是:{}",id);
         categoryService.deleteCategoryById(id);
         return Result.success();
+    }
+
+    /**
+     * 查询分类情况
+     * @return
+     */
+    @GetMapping("/list")
+    @ApiOperation("查询分类情况")
+    public Result<List<Category>> listCategoryType(String type){
+        log.info("查询分类情况");
+        List<Category> categorys = categoryService.listCategoryType(type);
+        return Result.success(categorys);
     }
 }

@@ -20,6 +20,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @Author: 孙毅
@@ -120,5 +121,15 @@ public class CategoryServiceImpl implements CategoryService {
 
         //删除分类数据
         categoryMapper.deleteCategoryById(id);
+    }
+
+    /**
+     * 查询分类情况
+     * @return
+     */
+    @Override
+    public List<Category> listCategoryType(String type) {
+        List<Category> categorys = categoryMapper.listCategoryType(type);
+        return categorys;
     }
 }
