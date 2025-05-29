@@ -4,11 +4,11 @@ import com.github.pagehelper.Page;
 import com.sky.annotation.AutoFill;
 import com.sky.dto.DishPageQueryDTO;
 import com.sky.entity.Dish;
-import com.sky.entity.DishFlavor;
 import com.sky.enumeration.OperationType;
 import com.sky.vo.DishVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -31,11 +31,7 @@ public interface DishMapper {
     @AutoFill(value = OperationType.INSERT)
     void insert(Dish dish);
 
-    /**
-     * 向口味表插入n条数据
-     * @param flavors
-     */
-    void insertBatch(List<DishFlavor> flavors);
+
 
     /**
      * 菜品分页查询
@@ -43,4 +39,32 @@ public interface DishMapper {
      * @return
      */
     Page<DishVO> pageQuery(DishPageQueryDTO dishPageQueryDTO);
+
+    /**
+     * 通过菜品的Id查询对应的数据
+     * @param ids
+     * @return
+     */
+    List<Dish> getByIds(List<Long> ids);
+
+    /**
+     * 根据id的集合批量删除菜品
+     * @param ids
+     */
+    void deletByIds(List<Long> ids);
+
+    /**
+     * 菜品起售、停售
+     * @param status
+     * @param id
+     * @return
+     */
+    @Update("update dish set status = #{status} where id=#{id}")
+    void startOrStop(Integer status, Long id);
+
+    @Select("select * from dish where id = #{id};")
+    Dish getById(Long id);
+
+    @AutoFill(value = OperationType.UPDATE)
+    void update(Dish dish);
 }
