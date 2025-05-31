@@ -171,4 +171,15 @@ public class DishServiceImpl implements DishService {
         // 重新插入口味数据
         dishFlavorMapper.insertBatch(flavors);
     }
+
+    /**
+     * 根据分类id查询菜品
+     * @param categoryId
+     * @return
+     */
+    @Override
+    public List<Dish> getByCategoryId(Long categoryId) {
+        List<Dish> dishes = dishMapper.getByCategoryId(categoryId);
+        return dishes;
+    }
 }

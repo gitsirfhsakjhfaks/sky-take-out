@@ -11,10 +11,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -42,5 +39,18 @@ public class SetmealController {
         log.info("分页查询:{}",setmealPageQueryDTO);
         PageResult pageResult = setmealService.pageQuery(setmealPageQueryDTO);
         return Result.success(pageResult);
+    }
+
+    /**
+     * 新增套餐
+     * @param setmealDTO
+     * @return
+     */
+    @PostMapping
+    @ApiOperation("新增套餐")
+    public Result save(@RequestBody SetmealDTO setmealDTO){
+        log.info("新增套餐:{}",setmealDTO);
+        setmealService.save(setmealDTO);
+        return Result.success();
     }
 }
