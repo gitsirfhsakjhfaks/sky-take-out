@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace填写dao层接口类的全路径-->
+<mapper namespace="com.sky.mapper.SetmealMapper">
+
+    <select id="pageQuery" resultType="com.sky.vo.SetmealVO">
+        select s.id,s.category_id AS categoryId,s.name,s.price,s.status,s.description,s.image,s.update_time,
+               c.name category_name
+        from setmeal s left join category as c on s.category_id = c.id
+        <where>
+            <if test="categoryId != null">
+                and category_id = #{categoryId}
+            </if>
+            <if test="name != null">
+                and like concat('%',#{name},'%')
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+        </where>
+        order by s.create_time desc
+    </select>
+</mapper>
