@@ -20,6 +20,7 @@ import com.sky.vo.SetmealVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -106,5 +107,46 @@ public class SetmealServiceImpl implements SetmealService {
                 .status(status)
                 .build();
         setmealMapper.update(setmeal);
+    }
+
+    /**
+     * 修改套餐
+     * @param setmealDTO
+     * @return
+     */
+    @Override
+    @Transactional
+    public void update(SetmealDTO setmealDTO) {
+        Setmeal setmeal = new Setmeal();
+        BeanUtils.copyProperties(setmealDTO,setmeal);// 只复制双方共有的属性
+        List<SetmealDish> setmealDishList = setmealDTO.getSetmealDishes();
+        // 我需要操作DTO中的哪些字段到不同的数据表中
+        // 两张表需要修改，setmeal套餐表，一个是setmeal_dish套餐和菜品的中间表
+
+        // 操作DTO中的setmeal数据表有关字段到setmeal数据表，注意更新操作的注解
+        setmealMapper.update(setmeal);
+
+        // 操作DTO中的List<SetmealDish>到setmeal_dish数据表
+        // 先把之前的删掉、再重新添加（根据setmeal_id）
+        setmealDishMapper.deleteBySetmealId(setmealDTO.getId());
+        setmealDishMapper.insertBatch(setmealDishList);
+    }
+
+    /**
+     * 根据id查询套餐
+     * @param id
+     * @return
+     */
+    @Override
+    public SetmealVO getById(Long id) {
+        // 查询setmeal表
+        Setmeal setmeal = setmealMapper.getById(id);
+        // 查询setmeal_dish表
+        List<SetmealDish> setmealDishes = setmealDishMapper.getBySetmealId(id);
+
+        SetmealVO setmealVO = new SetmealVO();
+        BeanUtils.copyProperties(setmeal,setmealVO);
+        setmealVO.setSetmealDishes(setmealDishes);
+        return setmealVO;
     }
 }

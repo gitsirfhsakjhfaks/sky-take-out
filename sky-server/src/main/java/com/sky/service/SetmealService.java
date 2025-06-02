@@ -3,6 +3,7 @@ package com.sky.service;
 import com.sky.dto.SetmealDTO;
 import com.sky.dto.SetmealPageQueryDTO;
 import com.sky.result.PageResult;
+import com.sky.vo.SetmealVO;
 
 /**
  * @Author: 孙毅
@@ -32,4 +33,18 @@ public interface SetmealService {
      * @return
      */
     void startOrStop(Long id, Integer status);
+
+    /**
+     * 修改套餐
+     * @param setmealDTO
+     * @return
+     */
+    void update(SetmealDTO setmealDTO);
+
+    /**
+     * 根据id查询套餐
+     * @param id
+     * @return
+     */
+    SetmealVO getById(Long id);
 }
