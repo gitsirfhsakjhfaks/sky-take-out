@@ -11,3 +11,7 @@ sky:
     access-key-id: LTAI5tSb4tDgsTkjgCVupPjM
     access-key-secret: XnjtfhnYuVkqE96qZy7CnlHxg3lBKg
     bucket-name: my-bucket-sun
+  redis:
+    host: localhost
+    port: 6379
+    database: 10
